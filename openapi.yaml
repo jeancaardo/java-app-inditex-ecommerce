@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Inditex Price API
+  version: 1.0.0
+  description: API para consultar el precio aplicable de un producto en una fecha y marca determinada.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/prices:
+    get:
+      summary: Obtener precio aplicable
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 2020-06-14-10.00.00
+        - name: productId
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 35455
+        - name: brandId
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Precio encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  productId:
+                    type: integer
+                  brandId:
+                    type: integer
+                  priceList:
+                    type: integer
+                  startDate:
+                    type: string
+                    format: date-time
+                  endDate:
+                    type: string
+                    format: date-time
+                  price:
+                    type: number
+                    format: double
+        '404':
+          description: No se encontró un precio aplicable
